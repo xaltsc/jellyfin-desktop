@@ -1,6 +1,6 @@
 { cef-binary }:
 let
-  version = "149.0.4";
+  version = "149.0.5";
 in
 (
   if (cef-binary.version == version) then
@@ -8,11 +8,11 @@ in
   else
     (cef-binary.override {
       inherit version;
-      gitRevision = "2f1bfd8";
-      chromiumVersion = "149.0.7827.156";
+      gitRevision = "6770623";
+      chromiumVersion = "149.0.7827.197";
       srcHashes = {
-        aarch64-linux = "sha256-iQmnlonux7I+2ACEtpdmlS1E4A+aNFgylRsykD+KgKA=";
-        x86_64-linux = "sha256-bUNgdnXkfta/pA0c/OE20E53IFKfjxxENdS6Hc0YObI=";
+        aarch64-linux = "sha256-cBAvcvs1rAg5EKJkCt81RZYupCWpUNIC/nLt3PJow7Q=";
+        x86_64-linux = "sha256-OPGMBJmvvLiLdBDniBQwx7LmTGGI59AcesJdILSeqcs=";
       };
     })
 ).overrideAttrs
