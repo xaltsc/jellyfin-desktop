@@ -23,6 +23,9 @@
               inherit (p) cef-lib mpv-external-prefix;
               inherit (self) lastModifiedDate;
             };
+            jellyfin-desktop_last_good_niri = {
+              inherit (p) jellyfin-desktop cef-lib;
+            };
             mpv-external-prefix = { };
           })
           // {

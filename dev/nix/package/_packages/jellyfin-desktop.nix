@@ -15,6 +15,9 @@
   mpv-external-prefix,
 
   lastModifiedDate,
+
+  cargoHash ? "sha256-GqSk6ZjY34esHGBmaY7sbFjQI6q9e4J3Qu87tFEW6O0=",
+  wl-proxy-hash ? "sha256-8NMNPhBSW2gLXc9bwyg2kmHb12XIaV6b4PjM62xLldQ=",
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   src = ../../../..;
@@ -31,12 +34,12 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   # Fixes some Cargo.lock issues
   cargoRoot = "src";
-  cargoHash = "sha256-GqSk6ZjY34esHGBmaY7sbFjQI6q9e4J3Qu87tFEW6O0=";
+  inherit cargoHash;
   cargoLock = {
     # Fixes some other Cargo.lock issues
     lockFile = "${finalAttrs.src}/${finalAttrs.cargoRoot}/Cargo.lock";
     outputHashes = {
-      "wl-proxy-0.1.2" = "sha256-8NMNPhBSW2gLXc9bwyg2kmHb12XIaV6b4PjM62xLldQ=";
+      "wl-proxy-0.1.2" = wl-proxy-hash;
     };
   };
 
