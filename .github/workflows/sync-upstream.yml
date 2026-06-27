@@ -1,0 +1,66 @@
+# AI Slop
+name: Sync upstream
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0     # need full history for ancestor checks
+
+      - name: Configure git
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Fetch upstream
+        run: |
+          git remote add upstream https://github.com/jellyfin/jellyfin-desktop.git
+          git fetch upstream
+
+      - name: Sync or open PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          UPSTREAM=upstream/main
+          TARGET=main
+          PR_BRANCH=sync/upstream
+
+          # Upstream already contained in target → nothing to do
+          if git merge-base --is-ancestor "$UPSTREAM" "$TARGET"; then
+            echo "Already up to date."
+            exit 0
+          fi
+
+          # Target is an ancestor of upstream → clean fast-forward
+          if git merge-base --is-ancestor "$TARGET" "$UPSTREAM"; then
+            echo "Fast-forwarding $TARGET."
+            git merge --ff-only "$UPSTREAM"
+            git push origin "$TARGET"
+            exit 0
+          fi
+
+          # Diverged → push upstream tip to a branch and open a PR
+          echo "Histories diverged; opening a PR."
+          git branch -f "$PR_BRANCH" "$UPSTREAM"
+          git push -f origin "$PR_BRANCH"
+
+          if [ -z "$(gh pr list --head "$PR_BRANCH" --state open --json number -q '.[].number')" ]; then
+            gh pr create \
+              --base "$TARGET" \
+              --head "$PR_BRANCH" \
+              --title "Sync with upstream" \
+              --body "Automated upstream sync. Fast-forward wasn't possible, so this brings in upstream changes for review."
+          else
+            echo "PR already open; force-pushed latest upstream to it."
+          fi
