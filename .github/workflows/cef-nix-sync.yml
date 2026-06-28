@@ -16,7 +16,7 @@ jobs:
   regen:
     runs-on: ubuntu-latest
     # Only fire when the triggering (head) commit is a Renovate cef bump.
-    if: startsWith(github.event.head_commit.message, 'Update Rust crate cef')
+    if: ${{ startsWith(github.event.head_commit.message, 'Update Rust crate cef') || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Check out the repository
         uses: actions/checkout@v6
@@ -29,9 +29,8 @@ jobs:
       - name: Update nix cef-binary if needed
         run: |
           set -o pipefail
-          UPDATE_SCRIPT="dev/nix/package/_packages/update-cef.sh"
-          chmod +x "${UPDATE_SCRIPT}"
-          ./"${UPDATE_SCRIPT}" 2>&1 | tee /tmp/script.log
+          UPDATE_SCRIPT="$(nix-instantiate --eval -E '(builtins.getFlake (toString ./.)).packages.${builtins.currentSystem}.cef-binary.passthru.updateScript')"
+          "${UPDATE_SCRIPT}" 2>&1 | tee /tmp/script.log
 
       - name: Build the PR body
         run: |
@@ -53,7 +52,7 @@ jobs:
         with:
           commit-message: "sync nix CEF version with Rust CEF version"
           title: "Sync nix CEF version with Rust CEF version"
-          body_path: /tmp/pr-body.md
+          body-path: /tmp/pr-body.md
           branch: automated/cef-nix-updates
           base: ${{ github.event.repository.default_branch }}
           delete-branch: true

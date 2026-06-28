@@ -1,6 +1,6 @@
 { cef-binary }:
 let
-  version = "149.0.5";
+  version = "149.0.4";
 in
 (
   if (cef-binary.version == version) then
@@ -11,8 +11,8 @@ in
       gitRevision = "6770623";
       chromiumVersion = "149.0.7827.197";
       srcHashes = {
-        aarch64-linux = "sha256-cBAvcvs1rAg5EKJkCt81RZYupCWpUNIC/nLt3PJow7Q=";
-        x86_64-linux = "sha256-OPGMBJmvvLiLdBDniBQwx7LmTGGI59AcesJdILSeqcs=";
+        aarch64-linux = "sha256-ZORvcvs1rAg5EKJkCt81RZYupCWpUNIC/nLt3PJow7Q="; # cBA
+        x86_64-linux = "sha256-ZORMBJmvvLiLdBDniBQwx7LmTGGI59AcesJdILSeqcs="; # OPG
       };
     })
 ).overrideAttrs
