@@ -54,3 +54,7 @@ jobs:
           branch: automated/cef-nix-updates
           base: ${{ github.event.repository.default_branch }}
           delete-branch: true
+          labels: |
+            dependencies
+            automated
+            nix
