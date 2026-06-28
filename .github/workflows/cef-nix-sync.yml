@@ -35,7 +35,7 @@ jobs:
       - name: Build the PR body
         run: |
           {
-            echo "Automated changes produced by \`_update-cef.sh\`"
+            echo "Automated changes produced by \`cef-binary\` \`updateScript\`"
             echo "following an \`Update Rust crate cef\` commit."
             echo
             echo "<details><summary>Script output</summary>"
