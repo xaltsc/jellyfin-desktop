@@ -1,9 +1,12 @@
 name: CEF version nix sync
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - "**"
+      - "main"
+    paths:
+      - "src/Cargo.lock"
 
 permissions:
   contents: write
