@@ -1,4 +1,4 @@
-name: CEF version nix sync
+name: CEF version nix sync
 
 on:
   workflow_dispatch:
