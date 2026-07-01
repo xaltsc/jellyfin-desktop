@@ -41,7 +41,7 @@ jobs:
       - name: Build packages and push to cachix
         run: nix run . -- --generate-settings-schema > dev/nix/home/_settings.json
       - name: Create PR if needed
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "flake: update settings schema"
