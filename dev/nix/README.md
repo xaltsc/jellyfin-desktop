@@ -14,7 +14,9 @@ Simply add this to your `flake.nix` inputs:
 ```nix
 inputs = {
   jellyfin-desktop = {
-    url = "github:jellyfin/jellyfin-desktop";
+    url = "github:xaltsc/jellyfin-desktop";
+    # XOR if you want to use the Niri fix
+    url = "github:xaltsc/jellyfin-desktop/niri-test";
 
     # Optional. This might make the cache useless.
     inputs.nixpkgs.follows = "nixpkgs";
@@ -25,17 +27,17 @@ And it should be available in your inputs.
 
 ## Cache usage
 
-There is a cache available at [`jellyfin.cachix.org`](https://jellyfin.cachix.org). To use is, in your `flake.nix`,
+There is a cache available at [`xaltsc-jfnd.cachix.org`](https://xaltsc-jfnd.cachix.org). To use is, in your `flake.nix`,
 add the following to your `nixConfig` and accept the configuration on `rebuild`. Caches distribute
 binaries that are compiled by us, so us it at your own assesment of the risk it represents.
 
 ```nix
 nixConfig = {
   extra-substituters = [
-    "https://jellyfin.cachix.org"
+    "https://xaltsc-jfnd.cachix.org"
   ];
   extra-trusted-public-keys = [
-    "jellyfin-desktop.cachix.org-1:SOMEPLACEHOLDERHASH"
+    "xaltsc-jfnd.cachix.org-1:cCD4MB/Hqw1ktSbT+Dtv0clFpK1/YksbIQExL1hBxqo="
   ];
 };
 ```
