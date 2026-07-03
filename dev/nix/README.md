@@ -1,12 +1,11 @@
 This repository provides, for Nix users, packages, an overlay overriding `nixpkgs`'s
 `jellyfin-desktop`, as well as a `home-manager` module.
 
-**Note**: everything said in this file is untested on foreign distributions and on other
-architectures than `x86_64-linux` or on OS X with [`nix-darwin`](https://github.com/nix-darwin/nix-darwin).
-For foreign distributions, you may want to use [`nixGL`](https://github.com/nix-community/nixgl)
-because of the issues arising from the use of `nix`-provided `libGL`.
-If you come across issues on foreign distributions, OS X or other architectures, please report them
-on the [bug tracker](https://github.com/jellyfin/jellyfin-desktop/issues).
+**Note**: The main target of this flake is NixOS `x86_64-linux`.
+On foreign distributions, it has been tested with success with [`nixGL`](https://github.com/nix-community/nixgl).
+On `aarch64-linux`, build succeds and is even cached, however, it has not been tested.
+On macOS, the build will likely fail, but a fix may be possible.
+If you come across any issues, please report them on the [bug tracker](https://github.com/jellyfin/jellyfin-desktop/issues).
 
 # Flake usage
 
