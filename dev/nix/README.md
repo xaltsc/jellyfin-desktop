@@ -95,7 +95,7 @@ Example usage of the `home-manager` is as below:
             enable = true;
 
             # Enable the cache
-            cache.enable = false;
+            cache.enable = false; # DON'T ENABLE IT, there's currently a bug in this main branch, although it's already fixed in flake-cache
 
             # Optional. Defaults to the main package package of the flake.
             # In the future, this will also be used to get the list of settings.
